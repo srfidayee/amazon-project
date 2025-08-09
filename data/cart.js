@@ -50,3 +50,24 @@ export function removeFromCart(productId) {
 
     saveTOLocalStorage();
 }
+
+export function calculateCartQuantity(qtyClass) {
+    let cartQuantity = 0;
+
+    cart.forEach((item) => {
+        cartQuantity += item.quantity;
+    })
+
+    document.querySelector(qtyClass).innerHTML = cartQuantity;
+}
+
+export function updateCartQuantity(productId, quantity){
+    cart.forEach((item) => {
+        if(item.productId === productId){
+            item.quantity = quantity;
+        }
+    })
+
+    saveTOLocalStorage();
+    return true;
+}
