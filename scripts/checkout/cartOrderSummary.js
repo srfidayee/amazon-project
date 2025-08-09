@@ -1,9 +1,9 @@
 import { cart, removeFromCart, calculateCartQuantity, updateCartQuantity, updateDeliveryOption } from '../../data/cart.js';
 import { getProduct, products } from '../../data/products.js';
 import { currencyFormat } from '../utils/money.js';
-import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
-import dayJS from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import { deliveryOptions, getDeliveryOption, getDeliveryDate } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 
  export function renderCartOrderSummary() {
     let cartOrderSummaryHTML = '';
@@ -16,9 +16,7 @@ import { renderPaymentSummary } from './paymentSummary.js';
         let deliveryOptionId = cartItem.deliveryOptionId;
         let deliveryOption = getDeliveryOption(deliveryOptionId);
 
-        const today = dayJS();
-        const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-        const dateString = deliveryDate.format('dddd, MMMM D');
+        const dateString = getDeliveryDate(deliveryOptionId);
 
         cartOrderSummaryHTML +=
             `
@@ -72,9 +70,7 @@ import { renderPaymentSummary } from './paymentSummary.js';
 
         deliveryOptions.forEach((option) => {
 
-            const today = dayJS();
-            const deliveryDate = today.add(option.deliveryDays, 'days');
-            const dateString = deliveryDate.format('dddd, MMMM D');
+            const dateString = getDeliveryDate(option.id);
             const priceString = option.priceCents === 0 ? 'FREE' : `$${currencyFormat(option.priceCents)} -`;
 
             const isChecked = option.id === cartItem.deliveryOptionId;
@@ -107,17 +103,16 @@ import { renderPaymentSummary } from './paymentSummary.js';
 
     document.querySelector('.js-order-summary').innerHTML = cartOrderSummaryHTML;
 
-    calculateCartQuantity('.js-cart-quantity-link');
+    
 
     document.querySelectorAll('.js-delete-link').forEach((link) => {
         link.addEventListener('click', () => {
             const { productId } = link.dataset;
 
             removeFromCart(productId);
-            calculateCartQuantity('.js-cart-quantity-link');
 
-            document.querySelector(`.js-cart-item-container-${productId}`).remove();
-
+            renderCheckoutHeader();
+            renderCartOrderSummary();
             renderPaymentSummary();
         })
     })
@@ -137,9 +132,9 @@ import { renderPaymentSummary } from './paymentSummary.js';
         updateCartQuantity(productId, quantity);
 
         container.querySelector('.quantity-label').innerHTML = quantity;
-        calculateCartQuantity('.js-cart-quantity-link');
         container.classList.remove('is-editing-quantity');
-
+        
+        renderCheckoutHeader();
         renderPaymentSummary();
     }
 
