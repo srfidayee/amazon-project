@@ -16,10 +16,10 @@ describe('test suite: add to cart', () => {
         loadFromStorage();
         console.log(localStorage.getItem('cart'));
 
-        // const qtyInput = document.createElement('input');
-        // qtyInput.classList.add('js-quantity-selector-54e0eccd-8f36-462b-b68a-8182611d9add');
-        // qtyInput.value = '1';
-        // document.body.appendChild(qtyInput);
+        const qtyInput = document.createElement('input');
+        qtyInput.classList.add('js-quantity-selector-54e0eccd-8f36-462b-b68a-8182611d9add');
+        qtyInput.value = '1';
+        document.body.appendChild(qtyInput);
 
         addToCart('54e0eccd-8f36-462b-b68a-8182611d9add');
 
@@ -41,10 +41,10 @@ describe('test suite: add to cart', () => {
         loadFromStorage();
         console.log(localStorage.getItem('cart'));
 
-        // const qtyInput = document.createElement('input');
-        // qtyInput.classList.add('js-quantity-selector-54e0eccd-8f36-462b-b68a-8182611d9add');
-        // qtyInput.value = '1';
-        // document.body.appendChild(qtyInput);
+        const qtyInput = document.createElement('input');
+        qtyInput.classList.add('js-quantity-selector-54e0eccd-8f36-462b-b68a-8182611d9add');
+        qtyInput.value = '1';
+        document.body.appendChild(qtyInput);
 
         addToCart('54e0eccd-8f36-462b-b68a-8182611d9add');
 
