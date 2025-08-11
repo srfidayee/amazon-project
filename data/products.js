@@ -31,7 +31,7 @@ class Product{
     }
 
     getPrice() {
-        return `${currencyFormat(this.priceCents)}`;
+        return `$${currencyFormat(this.priceCents)}`;
     }
 }
 
