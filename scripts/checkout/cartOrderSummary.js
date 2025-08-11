@@ -20,7 +20,7 @@ import { renderCheckoutHeader } from './checkoutHeader.js';
 
         cartOrderSummaryHTML +=
             `
-            <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
+            <div class="cart-item-container js-cart-item-container js-cart-item-container-${matchingProduct.id}">
                 <div class="delivery-date js-delivery-date">
                     Delivery date: ${dateString}
                 </div>
@@ -35,7 +35,7 @@ import { renderCheckoutHeader } from './checkoutHeader.js';
                         <div class="product-price">
                             ${currencyFormat(matchingProduct.priceCents)}
                         </div>
-                        <div class="product-quantity">
+                        <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                             <span>
                                 Quantity: <span class="quantity-label">${cartItem.quantity}</span>
                             </span>
@@ -46,7 +46,7 @@ import { renderCheckoutHeader } from './checkoutHeader.js';
                             <span class="save-quantity-link link-primary js-save-quantity-link" data-product-id="${matchingProduct.id}">
                                 Save
                             </span>
-                            <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
+                            <span class="delete-quantity-link link-primary js-delete-link js-delete-link-${matchingProduct.id}" data-product-id="${matchingProduct.id}">
                                 Delete
                             </span>
                         </div>
