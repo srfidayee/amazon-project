@@ -29,7 +29,7 @@ import { renderCheckoutHeader } from './checkoutHeader.js';
                     <img class="product-image" src="${matchingProduct.image}">
     
                     <div class="cart-item-details">
-                        <div class="product-name">
+                        <div class="product-name js-product-name-${matchingProduct.id}">
                             ${matchingProduct.name}
                         </div>
                         <div class="product-price">
@@ -77,11 +77,11 @@ import { renderCheckoutHeader } from './checkoutHeader.js';
 
             html +=
                 `
-                <div class="delivery-option js-delivery-option"
+                <div class="delivery-option js-delivery-option js-delivery-option-${matchingProduct.id}-${option.id}"
                     data-product-id = "${matchingProduct.id}"
                     data-delivery-option-id = "${option.id}"
                 >
-                    <input type="radio" class="delivery-option-input"
+                    <input type="radio" class="delivery-option-input js-delivery-option-input-${matchingProduct.id}-${option.id}"
                         name="delivery-option-${matchingProduct.id}"
                         ${isChecked ? 'checked' : ''}
                     >
