@@ -13,6 +13,12 @@ describe('test suite: cartOrderSummary', () => {
         loadProductsFetch().then(done);
     })
 
+    /*
+    beforeAll( async () => {
+        await loadProductsFetch();
+    })
+    */
+
     beforeEach(() => {
         document.querySelector('.js-test-container').innerHTML =
             `
