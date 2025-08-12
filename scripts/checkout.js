@@ -6,6 +6,26 @@ import { loadCart, loadCartFetch } from "../data/cart.js";
 // import "../data/cart-class.js";
 
 
+// async makes a function return a promise
+// await makes it wait to finish before moving to next line
+// async await is a better way to handle ansynchronous code as it lets us write async code like normal code
+//                                                                                           (line-by-line)
+
+async function loadPage() {
+    await loadProductsFetch();  // await can only be used in immediate async function
+    await loadCartFetch();
+
+    renderCheckoutHeader();
+    renderCartOrderSummary();
+    renderPaymentSummary();
+
+    return 'value';      //    return values to the function (do const value = async function())
+}
+
+loadPage();
+
+
+/*
 // Promise all --- Using Fetch instead of XML
 // Fetch uses promises unlike XML which uses Callbacks
 
@@ -17,7 +37,7 @@ Promise.all([
     renderCartOrderSummary();
     renderPaymentSummary();
 });
-
+*/
 
 /*
 // Promise all -- All promises in array run at the same time, move to next step after all have finished 
