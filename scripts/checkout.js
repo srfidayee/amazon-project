@@ -1,12 +1,27 @@
 import { renderCheckoutHeader } from "./checkout/checkoutHeader.js";
 import { renderCartOrderSummary } from "./checkout/cartOrderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
-import { loadProducts } from "../data/products.js";
-import { loadCart } from "../data/cart.js";
+import { loadProducts, loadProductsFetch } from "../data/products.js";
+import { loadCart, loadCartFetch } from "../data/cart.js";
 // import "../data/cart-class.js";
 
 
+// Promise all --- Using Fetch instead of XML
+// Fetch uses promises unlike XML which uses Callbacks
+
+Promise.all([
+    loadProductsFetch(),
+    loadCartFetch()
+]).then(()=> {
+    renderCheckoutHeader();
+    renderCartOrderSummary();
+    renderPaymentSummary();
+});
+
+
+/*
 // Promise all -- All promises in array run at the same time, move to next step after all have finished 
+// Using XML which uses Callbacks
 
 Promise.all([
     new Promise((resolve) => {
@@ -24,6 +39,7 @@ Promise.all([
     renderCartOrderSummary();
     renderPaymentSummary();
 });
+*/
 
 /*
 Promises -- wait for one promise to finish then move on to next

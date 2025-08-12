@@ -76,7 +76,7 @@ export function loadProducts(fun) {
     const xhr = new XMLHttpRequest(); // object to make HTTP Requests
 
     xhr.addEventListener('load', () => { // since request is asynchronous, we set up for wait it to load
-        products = JSON.parse(xhr.response).map((productDetails) => {
+        products = JSON.parse(xhr.response).map((productDetails) => { //                (using callback)
             if(productDetails.type === 'clothing'){
                 return new Clothing(productDetails);
             }
@@ -93,6 +93,25 @@ export function loadProducts(fun) {
     xhr.open('GET', 'https://supersimplebackend.dev/products'); // set up (request type, backend URL)
     xhr.send(); // send request to backend server
 }
+
+export function loadProductsFetch () { // Fetch is a better way to send HHTP requests as it uses promises
+    const promise = fetch('https://supersimplebackend.dev/products').then((response) => { // GET by default
+        return response.json(); // reponse.json() is asynchronous and return a promise
+    }).then((productsDetails) => {
+        products = productsDetails.map((productDetails) => {
+            if(productDetails.type === 'clothing'){
+                return new Clothing(productDetails);
+            }
+            else if(productDetails.type === 'appliance'){
+                return new Appliance(productDetails);
+            }
+            return new Product(productDetails);
+
+        });
+    })
+
+    return promise; // if we return promise, we can add as many "next steps" as we want using then
+}                   // loadProductsFetch().then(() => {}).then()...........
 
 /*
 export const products = [

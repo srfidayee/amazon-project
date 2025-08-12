@@ -1,11 +1,16 @@
 import { renderCartOrderSummary } from "../../scripts/checkout/cartOrderSummary.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
-import { loadProducts } from "../../data/products.js";
+import { loadProducts, loadProductsFetch } from "../../data/products.js";
 
 describe('test suite: cartOrderSummary', () => {
 
-    beforeAll((done) => {
+    /* beforeAll((done) => { // done is Jasmine function which lets the next codes run only after this   
+                                has finished
         loadProducts(done);
+    })*/
+
+    beforeAll((done) => {
+        loadProductsFetch().then(done);
     })
 
     beforeEach(() => {
