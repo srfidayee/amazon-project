@@ -43,11 +43,11 @@ export class Clothing extends Product { // Inheritance
     sizeChartLink;
 
     constructor(productDetails) {
-        super(productDetails);
+        super(productDetails);  // call constructor of parent class
         this.sizeChartLink = productDetails.sizeChartLink;
     }
 
-    extraInfoHTML() {
+    extraInfoHTML() { // method overriding
         return `<a href='${this.sizeChartLink}' target='_blank'>Size Chart</a>`
     }
 }
@@ -68,12 +68,14 @@ export class Appliance extends Product {
     }
 }
 
+// Load Products from Backend
+
 export let products = [];
 
 export function loadProducts(fun) {
-    const xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest(); // object to make HTTP Requests
 
-    xhr.addEventListener('load', () => {
+    xhr.addEventListener('load', () => { // since request is asynchronous, we set up for wait it to load
         products = JSON.parse(xhr.response).map((productDetails) => {
             if(productDetails.type === 'clothing'){
                 return new Clothing(productDetails);
@@ -88,8 +90,8 @@ export function loadProducts(fun) {
         fun();
     });
 
-    xhr.open('GET', 'https://supersimplebackend.dev/products');
-    xhr.send();
+    xhr.open('GET', 'https://supersimplebackend.dev/products'); // set up (request type, backend URL)
+    xhr.send(); // send request to backend server
 }
 
 /*
