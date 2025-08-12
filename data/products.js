@@ -90,6 +90,10 @@ export function loadProducts(fun) {
         fun();
     });
 
+    xhr.addEventListener('error', (error) => {
+        console.log('Unexpected Error. Please Try again later.');
+    })
+
     xhr.open('GET', 'https://supersimplebackend.dev/products'); // set up (request type, backend URL)
     xhr.send(); // send request to backend server
 }
@@ -107,12 +111,14 @@ export function loadProductsFetch () { // Fetch is a better way to send HHTP req
             }
             return new Product(productDetails);
 
+        })
+    }).catch((error) => {
+            console.log('Unexpected Error. Please Try again later.');
         });
-    })
 
     return promise; // if we return promise, we can add as many "next steps" as we want using then
 }                   // loadProductsFetch().then(() => {}).then()...........
-
+loadProductsFetch();
 /*
 export const products = [
     {

@@ -12,14 +12,24 @@ import { loadCart, loadCartFetch } from "../data/cart.js";
 //                                                                                           (line-by-line)
 
 async function loadPage() {
-    await loadProductsFetch();  // await can only be used in immediate async function
-    await loadCartFetch();
+    try {
+        // throw 'error1'
+        await loadProductsFetch();  // await can only be used in immediate async function
+        // await loadCartFetch();
+        const value = await new Promise((resolve, reject) => {
+            // throw 'error2'   ---> cant use throw in future
+            loadCart(() => {
+                // reject('error3'); --> use this for future error throw
+                resolve('valueX'); // returns 'valueX' back into the await expression above
+            })
+        })
 
+    } catch(error) {
+        console.log('Unexpected Error. Please Try again later.');
+    }
     renderCheckoutHeader();
     renderCartOrderSummary();
     renderPaymentSummary();
-
-    return 'value';      //    return values to the function (do const value = async function())
 }
 
 loadPage();
