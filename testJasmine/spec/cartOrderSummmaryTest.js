@@ -1,7 +1,12 @@
 import { renderCartOrderSummary } from "../../scripts/checkout/cartOrderSummary.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
+import { loadProducts } from "../../data/products.js";
 
 describe('test suite: cartOrderSummary', () => {
+
+    beforeAll((done) => {
+        loadProducts(done);
+    })
 
     beforeEach(() => {
         document.querySelector('.js-test-container').innerHTML =
