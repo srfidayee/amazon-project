@@ -1,12 +1,16 @@
-import {cart, addToCart, calculateCartQuantity} from '../data/cart.js';
-import {products} from '../data/products.js';
+import { cart, addToCart, calculateCartQuantity } from '../data/cart.js';
+import { products, loadProducts} from '../data/products.js';
 import { currencyFormat } from './utils/money.js';
 
 
-let productsHTML = '';
+loadProducts(renderProductsGrid);
 
-products.forEach((product) => {
-    productsHTML += `
+function renderProductsGrid() {
+
+    let productsHTML = '';
+
+    products.forEach((product) => {
+        productsHTML += `
         <div class="product-container">
             <div class="product-image-container">
                 <img class="product-image" src="${product.image}">
@@ -56,33 +60,34 @@ products.forEach((product) => {
             </button>
         </div>
     `;
-})
+    })
 
-document.querySelector('.js-products-grid').innerHTML = productsHTML;
+    document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-let timeOutIds = [];
+    let timeOutIds = [];
 
-calculateCartQuantity('.js-cart-quantity');
+    calculateCartQuantity('.js-cart-quantity');
 
-function displayAddedToCart(productId) {
-    document.querySelector(`.js-added-to-cart-${productId}`).classList.add('opacity-full');
+    function displayAddedToCart(productId) {
+        document.querySelector(`.js-added-to-cart-${productId}`).classList.add('opacity-full');
 
-    if (timeOutIds[productId]) {
-        clearTimeout(timeOutIds[productId]);
+        if (timeOutIds[productId]) {
+            clearTimeout(timeOutIds[productId]);
+        }
+
+        timeOutIds[productId] = setTimeout(() => {
+            document.querySelector(`.js-added-to-cart-${productId}`).classList.remove('opacity-full');
+        }, 2000);
     }
 
-    timeOutIds[productId] = setTimeout(() => {
-        document.querySelector(`.js-added-to-cart-${productId}`).classList.remove('opacity-full');
-    }, 2000);
-}
+    document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+        button.addEventListener('click', () => {
+            const { productId } = button.dataset;
 
-document.querySelectorAll('.js-add-to-cart').forEach((button) => {
-    button.addEventListener('click', () => {
-        const { productId } = button.dataset;
+            addToCart(productId);
+            calculateCartQuantity('.js-cart-quantity');
+            displayAddedToCart(productId);
 
-        addToCart(productId);
-        calculateCartQuantity('.js-cart-quantity');
-        displayAddedToCart(productId);
-
+        })
     })
-})
+}
