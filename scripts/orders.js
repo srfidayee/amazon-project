@@ -2,8 +2,9 @@ import { orders } from "../data/orders.js";
 import { currencyFormat } from "./utils/money.js";
 import { getProduct, loadProductsFetch, products } from "../data/products.js";
 import dayJS from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import { addToCart } from "../data/cart.js";
 
-let ordersSummaryHTML = '';
+
 
 async function loadPage() {
     await loadProductsFetch();
@@ -13,7 +14,7 @@ async function loadPage() {
 loadPage();
 
 function renderOrdersSummary() {
-
+    let ordersSummaryHTML = '';
     orders.forEach((order) => {
 
         ordersSummaryHTML += `
@@ -67,20 +68,20 @@ function renderOrdersSummary() {
                     ${matchingProduct.name}
                 </div>
                 <div class="product-delivery-date">
-                    Arriving on: ${dayJS(product.estimatedDeliveryTimes).format('MMMM D')}
+                    Arriving on: ${dayJS(product.estimatedDeliveryTime).format('MMMM D')}
                 </div>
                 <div class="product-quantity">
                     Quantity: ${product.quantity}
                 </div>
-                <button class="buy-again-button button-primary">
+                <button class="buy-again-button js-buy-again-button button-primary" data-product-id="${matchingProduct.id}">
                     <img class="buy-again-icon" src="images/icons/buy-again.png">
                     <span class="buy-again-message">Buy it again</span>
                 </button>
             </div>
 
             <div class="product-actions">
-                <a href="tracking.html">
-                    <button class="track-package-button button-secondary">
+                <a href="tracking.html?orderId${order.id}&productId=${matchingProduct.id}">
+                    <button class="track-package-button js-track-package-button button-secondary">
                         Track package
                     </button>
                 </a>
@@ -92,5 +93,14 @@ function renderOrdersSummary() {
     }
 
     document.querySelector('.orders-grid').innerHTML = ordersSummaryHTML;
+
+    document.querySelectorAll('.js-buy-again-button').forEach((button) => {
+        button.addEventListener('click', () => {
+            const { productId } = button.dataset;
+
+            addToCart(productId);
+            window.location.href = "checkout.html"
+        })
+    })
 
 }

@@ -23,7 +23,7 @@ export function saveTOLocalStorage() {
 
 export function addToCart(productId) {
 
-    let itemQuantity = Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
+    let itemQuantity = Number(document.querySelector(`.js-quantity-selector-${productId}`)?.value) || 1;
 
     let matchingItem;
     cart.forEach((item) => {
