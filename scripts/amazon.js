@@ -113,4 +113,10 @@ function renderProductsGrid() {
             window.location.href = `amazon.html?search=${value}`;
         }
     })
+
+    const searchButton = document.querySelector('.js-search-button');
+    searchButton.addEventListener('click', () =>{
+        const value = searchInput.value;
+        window.location.href = `amazon.html?search=${value}`;
+    })
 }

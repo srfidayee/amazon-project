@@ -103,4 +103,20 @@ function renderOrdersSummary() {
 
     calculateCartQuantity('.js-cart-quantity');
 
+    const searchInput = document.querySelector('.js-search-bar');
+    searchInput.addEventListener('keydown', (event) =>{
+        if(event.key === 'Enter'){
+
+            const value = searchInput.value;
+
+            window.location.href = `amazon.html?search=${value}`;
+        }
+    })
+
+    const searchButton = document.querySelector('.js-search-button');
+    searchButton.addEventListener('click', () =>{
+        const value = searchInput.value;
+        window.location.href = `amazon.html?search=${value}`;
+    })
+
 }
