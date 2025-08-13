@@ -13,15 +13,14 @@ loadPage();
 function renderTrackingSummary() {
     let trackingSummaryHTML = '';
 
-    const url = new URL(window.location.href);
-    const orderId = url.searchParams.get('orderId');
-    const productId = url.searchParams.get('productId');
+    const url = new URL(window.location.href);      // create URL object to get access to page's URL
+    const orderId = url.searchParams.get('orderId');    // get orderId from URL
+    const productId = url.searchParams.get('productId');    // get productId from URL
 
     let order = orders.find(order => order.id === orderId);
     let product = products.find(product => product.id === productId);
 
-    let orderProduct = order.products.find(p => p.productId === productId);
-    // let quantity = orderProduct ? orderProduct.quantity : 0;
+    let orderProduct = order.products.find(p => p.productId === productId); // find specific product in order
 
     trackingSummaryHTML +=
     `
@@ -56,9 +55,17 @@ function renderTrackingSummary() {
         </div>
 
         <div class="progress-bar-container">
-            <div class="progress-bar"></div>
+            <div class="progress-bar js-progress-bar"></div>
         </div>
     `;
 
     document.querySelector('.order-tracking').innerHTML = trackingSummaryHTML;
+
+    let currentTime = dayJS();
+    let orderTime = dayJS(order.orderTime);
+    let deliveryTime = dayJS(orderProduct.estimatedDeliveryTime);
+
+    const progressWidth = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100; // calculate progress bar width
+
+    document.querySelector('.js-progress-bar').style.width = `${progressWidth}%`;
 }
