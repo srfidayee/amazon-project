@@ -17,6 +17,7 @@ export class Product{
     name;
     rating;
     priceCents;
+    keywords;
 
     constructor(productDetails) {
         this.id = productDetails.id;
@@ -24,6 +25,7 @@ export class Product{
         this.name = productDetails.name;
         this.rating = productDetails.rating;
         this.priceCents = productDetails.priceCents;
+        this.keywords = productDetails.keywords;
     }
 
     getRatingURL() {
@@ -118,7 +120,7 @@ export function loadProductsFetch () { // Fetch is a better way to send HHTP req
 
     return promise; // if we return promise, we can add as many "next steps" as we want using then
 }                   // loadProductsFetch().then(() => {}).then()...........
-loadProductsFetch();
+
 /*
 export const products = [
     {
