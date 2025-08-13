@@ -2,7 +2,7 @@ import { orders } from "../data/orders.js";
 import { currencyFormat } from "./utils/money.js";
 import { getProduct, loadProductsFetch, products } from "../data/products.js";
 import dayJS from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-import { addToCart } from "../data/cart.js";
+import { addToCart, calculateCartQuantity } from "../data/cart.js";
 
 
 
@@ -48,13 +48,11 @@ function renderOrdersSummary() {
 
     function orderItemHTML(order) {
         let html = '';
-        console.log("Products array at runtime:", products);
         order.products.forEach((product) => {
             let matchingProduct = getProduct(product.productId);
 
             if (!matchingProduct) {
                 console.warn(`Product not found for ID: ${product.productId}`);
-                console.log(order);
                 return;
             }
 
@@ -102,5 +100,7 @@ function renderOrdersSummary() {
             window.location.href = "checkout.html"
         })
     })
+
+    calculateCartQuantity('.js-cart-quantity');
 
 }

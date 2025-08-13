@@ -1,7 +1,7 @@
 import { orders } from "../data/orders.js";
 import { loadProductsFetch, products } from "../data/products.js";
 import dayJS from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-
+import { calculateCartQuantity } from "../data/cart.js";
 
 async function loadPage() {
     await loadProductsFetch();
@@ -78,4 +78,6 @@ function renderTrackingSummary() {
     else if(progressWidth >= 100){
         document.querySelector('.js-delivered-label').style.color = `green`;
     }
+
+    calculateCartQuantity('.js-cart-quantity');
 }
