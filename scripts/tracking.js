@@ -43,13 +43,13 @@ function renderTrackingSummary() {
         <img class="product-image" src="${product.image}">
 
         <div class="progress-labels-container">
-            <div class="progress-label">
+            <div class="progress-label js-preparing-label">
                 Preparing
             </div>
-            <div class="progress-label current-status">
+            <div class="progress-label current-status js-shipped-label">
                 Shipped
             </div>
-            <div class="progress-label">
+            <div class="progress-label js-delivered-label">
                 Delivered
             </div>
         </div>
@@ -68,4 +68,14 @@ function renderTrackingSummary() {
     const progressWidth = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100; // calculate progress bar width
 
     document.querySelector('.js-progress-bar').style.width = `${progressWidth}%`;
+
+    if(progressWidth < 50){
+        document.querySelector('.js-preparing-label').style.color = `green`;
+    }
+    else if(progressWidth >= 50 && progressWidth < 100){
+        document.querySelector('.js-shipped-label').style.color = `green`;
+    }
+    else if(progressWidth >= 100){
+        document.querySelector('.js-delivered-label').style.color = `green`;
+    }
 }
